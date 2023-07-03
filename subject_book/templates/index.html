@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+    </style>
+    
+    <title>書籍一覧</title>
+  </head>
+  <body>
+    <h3>書籍一覧</h3>
+    <form action="/search" method="get">
+      <input type="text" name="query" placeholder="検索">
+      <input type="submit" value="検索">
+    </form>
+    <p>検索対象: タイトル, 著者名</p>
+    <table>
+      <table border="1">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>題名</th>
+          <th>著者名</th>
+          <th>ISBN</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for book in books %}
+          <tr>
+            <td>{{ book[0] }}</td>
+            <td>{{ book[1] }}</td>
+            <td>{{ book[2] }}</td>
+            <td>{{ book[3] }}</td>
+          </tr>
+        {% else %}
+          <td>書籍が登録されていません</td>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
