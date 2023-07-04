@@ -19,15 +19,16 @@
       }
     </style>
     
-    <title>書籍一覧</title>
+    <title>トップページ</title>
   </head>
   <body>
+    <a href="/register">登録画面</a>
     <h3>書籍一覧</h3>
+    <p>タイトルまたは 著者名を入力してください。</p>
     <form action="/search" method="get">
       <input type="text" name="query" placeholder="検索">
       <input type="submit" value="検索">
     </form>
-    <p>検索対象: タイトル, 著者名</p>
     <table>
       <table border="1">
       <thead>

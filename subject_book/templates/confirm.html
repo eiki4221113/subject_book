@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Confirm</title>
+  </head>
+  <body>
+    <h1>Confirm</h1>
+    <p>お名前: {{ name }}</p>
+    <p>電話番号: {{ phone_number }}</p>
+    <p>メールアドレス: {{ email }}</p>
+    <form action="/register" method="post">
+      <input type="hidden" name="name" value="{{ name }}">
+      <input type="hidden" name="phone_number" value="{{ phone_number }}">
+      <input type="hidden" name="email" value="{{ email }}">
+      <input type="hidden" name="password" value="{{ password }}">
+      <input type="submit" value="登録する">
+    </form> 
+    <form action="/register">
+        <input type="submit" value="戻る">
+    </form> 
+  </body>
+</html>

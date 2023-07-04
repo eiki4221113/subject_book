@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register</title>
+  </head>
+  <body>
+    <h1>登録</h1>
+    <form action="/register" method="post">
+      <label for="name">名前:</label><br>
+      <input type="text" id="name" name="name" value="{{ request.form['name'] }}"><br>
+      <label for="phone_number">電話番号:</label><br>
+      <input type="text" id="phone_number" name="phone_number" value="{{ request.form['phone_number'] }}"><br>
+      <label for="email">メールアドレス:</label><br>
+      <input type="text" id="email" name="email" value="{{ request.form['email'] }}"><br>
+      <label for="password">パスワード:</label><br>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="登録する">
+    </form> 
+  </body>
+</html>

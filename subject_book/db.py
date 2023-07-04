@@ -26,3 +26,12 @@ def search_books(query):
     cursor.close()
     connection.close()
     return rows
+
+def create_user(name, phone_number, email, hashed_password, salt):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO subject_user (name, phone_number, email, hashed_password, salt) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(sql, (name, phone_number, email, hashed_password, salt))
+    connection.commit()
+    cursor.close()
+    connection.close()
