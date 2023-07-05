@@ -35,3 +35,13 @@ def create_user(name, phone_number, email, hashed_password, salt):
     connection.commit()
     cursor.close()
     connection.close()
+
+def get_user_by_email(email):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = "SELECT * FROM subject_user WHERE email = %s"
+    cursor.execute(sql, (email,))
+    row = cursor.fetchone()
+    cursor.close()
+    connection.close()
+    return row

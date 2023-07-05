@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import db
 import hashlib
 import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route('/')
 def index():
@@ -39,6 +40,30 @@ def register():
 @app.route('/register_complete')
 def register_complete():
     return render_template('register_complete.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        
+        if not email or not password:
+            return 'All fields are required'
+        
+        user = db.get_user_by_email(email)
+        if not user:
+            return 'Invalid email or password'
+        
+        salt = bytes.fromhex(user[5])
+        hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000).hex()
+        if hashed_password != user[4]:
+            return 'Invalid email or password'
+        
+        session['user_id'] = user[0]
+        
+        return render_template('login_success.html')
+    else:
+        return render_template('login.html')
 
 
 if __name__ == '__main__':
