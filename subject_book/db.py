@@ -45,3 +45,23 @@ def get_user_by_email(email):
     cursor.close()
     connection.close()
     return row
+
+def create_book(title, author, isbn):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = "INSERT INTO subject_books (title, author, isbn) VALUES (%s, %s, %s)"
+    cursor.execute(sql, (title, author, isbn))
+    connection.commit()
+    cursor.close()
+    connection.close()
+    
+def delete_book(book_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = "DELETE FROM subject_books WHERE id = %s"
+    cursor.execute(sql, (book_id,))
+    # 図書を消去したあとに新たに登録するとidがずれるためidのリセット機能を追加（errorが出た場合消去）
+    cursor.execute("SELECT setval('subject_books_id_seq', (SELECT MAX(id) FROM subject_books))")
+    connection.commit()
+    cursor.close()
+    connection.close()

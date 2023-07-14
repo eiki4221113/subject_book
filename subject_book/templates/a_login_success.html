@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>管理者ダッシュボード</title>
+  </head>
+  <body>
+    <h1>管理者ダッシュボード</h1>
+    <h2>書籍一覧</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>題名</th>
+          <th>著者名</th>
+          <th>ISBN</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in books %}
+          <tr>
+            <td>{{ book[0] }}</td>
+            <td>{{ book[1] }}</td>
+            <td>{{ book[2] }}</td>
+            <td>{{ book[3] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>図書登録</title>
+  </head>
+  <body>
+    <h3>図書登録</h3>
+    <form action="{{ url_for('add_book') }}" method="post">
+      <label for="title">タイトル:</label><br>
+      <input type="text" id="title" name="title"><br>
+      <label for="author">著者名:</label><br>
+      <input type="text" id="author" name="author"><br>
+      <label for="isbn">ISBN:</label><br>
+      <input type="text" id="isbn" name="isbn"><br><br>
+      <input type="submit" value="登録する">
+    </form> 
+  </body>
+</html>
