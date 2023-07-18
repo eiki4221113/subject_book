@@ -1,30 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+    </style>
     <title>管理者ダッシュボード</title>
+    <a href="/add_book">図書登録</a><br>
   </head>
   <body>
-    <h1>管理者ダッシュボード</h1>
-    <h2>書籍一覧</h2>
+    <h3>書籍一覧</h3>
+    <p>タイトルまたは 著者名を入力してください。</p>
+    <form action="{{ url_for('search_books') }}" method="get">
+      <input type="text" name="query" placeholder="検索">
+      <input type="submit" value="検索">
+    </form>
     <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>題名</th>
-          <th>著者名</th>
-          <th>ISBN</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for book in books %}
+      <table border="1">
+        <thead>
           <tr>
-            <td>{{ book[0] }}</td>
-            <td>{{ book[1] }}</td>
-            <td>{{ book[2] }}</td>
-            <td>{{ book[3] }}</td>
+            <th>ID</th>
+            <th>題名</th>
+            <th>著者名</th>
+            <th>ISBN</th>
+            <th></th> <!-- Add an empty header cell for the delete button -->
           </tr>
-        {% endfor %}
-      </tbody>
+        </thead>
+        <tbody>
+          {% for book in books %}
+            <tr>
+              <td>{{ book[0] }}</td>
+              <td>{{ book[1] }}</td>
+              <td>{{ book[2] }}</td>
+              <td>{{ book[3] }}</td>
+              <!-- Add a delete button in the last cell -->
+              <td><a href="{{ url_for('delete_book', book_id=book[0]) }}">Delete</a></td> 
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </table>
   </body>
 </html>

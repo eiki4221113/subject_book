@@ -20,7 +20,6 @@
     </style>
     
     <title>トップページ</title>
-    <a href="/add_book">図書登録</a><br>
   </head>
   <body>
     <h3>書籍一覧</h3>
@@ -48,8 +47,6 @@
             <td>{{ book[1] }}</td>
             <td>{{ book[2] }}</td>
             <td>{{ book[3] }}</td>
-            <!-- Add a delete button in the last cell -->
-            <td><a href="{{ url_for('delete_book', book_id=book[0]) }}">Delete</a></td> 
             </tr>
           {% else %}
             <td colspan="5">書籍が登録されていません</td> <!-- Change the colspan to 5 to match the number of columns -->

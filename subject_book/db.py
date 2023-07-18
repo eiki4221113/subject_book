@@ -60,7 +60,7 @@ def delete_book(book_id):
     cursor = connection.cursor()
     sql = "DELETE FROM subject_books WHERE id = %s"
     cursor.execute(sql, (book_id,))
-    # 図書を消去したあとに新たに登録するとidがずれるためidのリセット機能を追加（errorが出た場合消去）
+    # 図書を消去したあとに新たに図書を登録するとidがずれるためidのリセット機能を追加（errorが出た場合消去）
     cursor.execute("SELECT setval('subject_books_id_seq', (SELECT MAX(id) FROM subject_books))")
     connection.commit()
     cursor.close()

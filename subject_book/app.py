@@ -6,6 +6,9 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+ADMIN_EMAIL = 'admin@admin.com'
+ADMIN_PASSWORD = 'morijyobi'
+
 @app.route('/')
 def index():
     books = db.select_all_books()
@@ -15,10 +18,13 @@ def index():
 def search_books():
     query = request.args.get('query')
     books = db.search_books(query)
-    if 'user_id' in session:
+    if session.get('is_admin'):
+        return render_template('a_login_success.html', books=books)
+    elif 'user_id' in session:
         return render_template('login_success.html', books=books)
     else:
         return render_template('index.html', books=books)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -51,6 +57,10 @@ def login_success():
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
+    # Check if the user is an admin
+    if not session.get('is_admin'):
+        return redirect(url_for('index'))
+    
     if request.method == 'POST':
         title = request.form['title']
         author = request.form['author']
@@ -63,18 +73,18 @@ def add_book():
         # Save the book to the database
         db.create_book(title, author, isbn)
         
-        return redirect(url_for('login_success'))
+        return redirect(url_for('a_login_success'))
     else:
         return render_template('add_book.html')
 
 @app.route('/delete_book/<int:book_id>')
 def delete_book(book_id):
+    # Check if the user is an admin
+    if not session.get('is_admin'):
+        return redirect(url_for('index'))
+    
     db.delete_book(book_id)
-    return redirect(url_for('login_success'))
-
-# Set the admin email and password
-ADMIN_EMAIL = 'admin@admin'
-ADMIN_PASSWORD = 'morijyobi'
+    return redirect(url_for('a_login_success'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -82,10 +92,10 @@ def login():
         email = request.form['email']
         password = request.form['password']
         
+        
         if not email or not password:
             return 'All fields are required'
         
-        # Check if the email and password match the admin credentials
         if email == ADMIN_EMAIL and password == ADMIN_PASSWORD:
             session['is_admin'] = True
             return redirect(url_for('a_login_success'))
@@ -107,7 +117,6 @@ def login():
     
 @app.route('/a_login_success')
 def a_login_success():
-    # Check if the user is an admin
     if not session.get('is_admin'):
         return redirect(url_for('index'))
     
