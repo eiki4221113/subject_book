@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>書籍編集</title>
+  </head>
+  <body>
+    <h1>書籍編集</h1>
+    <form action="{{ url_for('edit_book', book_id=book[0]) }}" method="post">
+      <label for="title">題名:</label><br>
+      <input type="text" id="title" name="title" value="{{ book[1] }}"><br>
+      <label for="author">著者名:</label><br>
+      <input type="text" id="author" name="author" value="{{ book[2] }}"><br>
+      <label for="isbn">ISBN:</label><br>
+      <input type="text" id="isbn" name="isbn" value="{{ book[3] }}"><br><br>
+      <input type="submit" value="更新">
+    </form> 
+  </body>
+</html>

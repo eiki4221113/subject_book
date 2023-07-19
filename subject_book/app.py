@@ -57,7 +57,6 @@ def login_success():
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
-    # Check if the user is an admin
     if not session.get('is_admin'):
         return redirect(url_for('index'))
     
@@ -66,11 +65,9 @@ def add_book():
         author = request.form['author']
         isbn = request.form['isbn']
         
-        # Validate the input
         if not title or not author or not isbn:
             return 'All fields are required'
         
-        # Save the book to the database
         db.create_book(title, author, isbn)
         
         return redirect(url_for('a_login_success'))
@@ -79,7 +76,6 @@ def add_book():
 
 @app.route('/delete_book/<int:book_id>')
 def delete_book(book_id):
-    # Check if the user is an admin
     if not session.get('is_admin'):
         return redirect(url_for('index'))
     
@@ -123,7 +119,25 @@ def a_login_success():
     books = db.select_all_books()
     return render_template('a_login_success.html', books=books)
 
-
+@app.route('/edit_book/<int:book_id>', methods=['GET', 'POST'])
+def edit_book(book_id):
+    if not session.get('is_admin'):
+        return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        title = request.form['title']
+        author = request.form['author']
+        isbn = request.form['isbn']
+        
+        if not title or not author or not isbn:
+            return 'All fields are required'
+        
+        db.update_book(book_id, title, author, isbn)
+        
+        return redirect(url_for('a_login_success'))
+    else:
+        book = db.select_book_by_id(book_id)
+        return render_template('edit_book.html', book=book)
 
 if __name__ == '__main__':
     app.run()

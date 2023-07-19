@@ -65,3 +65,21 @@ def delete_book(book_id):
     connection.commit()
     cursor.close()
     connection.close()
+
+def select_book_by_id(book_id):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM subject_books WHERE id = %s', (book_id,))
+    book = cur.fetchone()
+    cur.close()
+    conn.close()
+    return book
+
+def update_book(book_id, title, author, isbn):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = "UPDATE subject_books SET title = %s, author = %s, isbn = %s WHERE id = %s"
+    cursor.execute(sql, (title, author, isbn, book_id))
+    connection.commit()
+    cursor.close()
+    connection.close()
