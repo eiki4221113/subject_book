@@ -80,6 +80,8 @@ def update_book(book_id, title, author, isbn):
     cursor = connection.cursor()
     sql = "UPDATE subject_books SET title = %s, author = %s, isbn = %s WHERE id = %s"
     cursor.execute(sql, (title, author, isbn, book_id))
+    # 図書を更新するとidがずれるためidのリセット機能を追加（errorが出た場合消去）これを追加した場合、空き番号に繰り上げられる７番を消去すると、次に更新した図書が７番になる
+    # cursor.execute("SELECT setval('subject_books_id_seq', (SELECT MAX(id) FROM subject_books))")
     connection.commit()
     cursor.close()
     connection.close()

@@ -35,7 +35,7 @@ def register():
         password = request.form['password']
         
         if not name or not phone_number or not email or not password:
-            return 'All fields are required'
+            return 'すべて必須項目です'
         
         salt = os.urandom(16)
         hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000).hex()
@@ -66,7 +66,7 @@ def add_book():
         isbn = request.form['isbn']
         
         if not title or not author or not isbn:
-            return 'All fields are required'
+            return 'すべて入力してください'
         
         db.create_book(title, author, isbn)
         
@@ -90,7 +90,7 @@ def login():
         
         
         if not email or not password:
-            return 'All fields are required'
+            return 'すべて入力してください'
         
         if email == ADMIN_EMAIL and password == ADMIN_PASSWORD:
             session['is_admin'] = True
@@ -98,12 +98,12 @@ def login():
         
         user = db.get_user_by_email(email)
         if not user:
-            return 'Invalid email or password'
+            return 'パスワードかメールドレスが間違えています'
         
         salt = bytes.fromhex(user[5])
         hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 100000).hex()
         if hashed_password != user[4]:
-            return 'Invalid email or password'
+            return 'パスワードかメールドレスが間違えています'
         
         session['user_id'] = user[0]
         
@@ -130,7 +130,7 @@ def edit_book(book_id):
         isbn = request.form['isbn']
         
         if not title or not author or not isbn:
-            return 'All fields are required'
+            return 'すべて必須項目です'
         
         db.update_book(book_id, title, author, isbn)
         
