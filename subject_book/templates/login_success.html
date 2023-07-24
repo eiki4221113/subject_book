@@ -1,42 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        text-align: left;
-        padding: 8px;
-      }
-      tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-      th {
-        background-color: #4CAF50;
-        color: white;
-      }
-    </style>
-    
     <title>トップページ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
   <body>
-    <h3>書籍一覧</h3>
-    <p>タイトルまたは 著者名を入力してください。</p>
-    <form action="{{ url_for('search_books') }}" method="get">
-      <input type="text" name="query" placeholder="検索">
-      <input type="submit" value="検索">
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">図書管理</a>
+        <form class="d-flex" action="{{ url_for('search_books') }}" method="get">
+          <input class="form-control me-2" name="query" type="search" placeholder="タイトルまたは著者名を入力してください" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">検索</button>
+        </div>
+      </ul>
     </form>
-    <table>
-      <table border="1">
+    </nav>
+    <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th>id</th>
             <th>題名</th>
             <th>著者名</th>
             <th>ISBN</th>
-            <th></th> <!-- Add an empty header cell for the delete button -->
           </tr>
         </thead>
         
